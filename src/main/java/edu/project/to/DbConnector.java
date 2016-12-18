@@ -1,60 +1,54 @@
 package edu.project.to;
 
 import com.mongodb.*;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
-import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by magda on 18.12.16.
  */
+
 public class DbConnector {
 
-    public DbConnector(){
+    private static final String DATABASE_NAME = "crawlerDB";
+    private static final String COLLECTION_NAME = "names";
+
+    private static final MongoClient mongoClient = new MongoClient("localhost", 27017);
+    private static final MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
+    private static final MongoCollection<Document> collection = database.getCollection(COLLECTION_NAME);
+
+
+    private static void savePerson(Person person) {
+
+        Document document = new Document();
+        document.put("name", person.getName());
+        document.put("url", person.getUrl());
+        collection.insertOne(document);
+
+        System.out.println(document.toJson());
 
     }
 
-    public void saveToDatabase(List<Person> foundPerson){
-        try{
-            MongoClient client = new MongoClient(
-                    new ServerAddress("localhost", 27017));
+    public static void savePersonCollection(List<Person> personList) {
+        personList.forEach(DbConnector::savePerson);
+    }
 
+    public static List<Person> getPeopleByName(String name) {
 
-            Mongo mongo = new Mongo("localhost", 27017);
-            DB db = mongo.getDB("crawlerDB");
+        Document filter = new Document("name", name);
+        MongoCursor<Document> cursor = collection.find(filter).iterator();
 
-            DBCollection collection = db.getCollection("names");
+        List<Person> personList = new ArrayList<>();
+        cursor.forEachRemaining(document ->
+                personList.add(new Person(document.getString("name"), document.getString("url")))
+        );
 
-            // 1. BasicDBObject example
-            System.out.println("BasicDBObject example...");
-
-
-
-            int i = 1;
-            // for (Map.Entry<String, Integer> entry : names.entrySet()) {
-            for(Person p : foundPerson){
-                BasicDBObject document = new BasicDBObject();
-                document.put("database", "crawlerDB");
-                document.put("table", "names");
-                BasicDBObject documentDetail = new BasicDBObject();
-                System.out.println("[" + i + "] [" + p.getName() + "] " + p.getUrl());
-                i++;
-
-                documentDetail.put("name", p.getName());
-                documentDetail.put("index", p.getUrl());
-                documentDetail.put("number", i);
-                document.put("detail", documentDetail);
-
-                collection.insert(document);
-                DBCursor cursorDoc = collection.find();
-                while (cursorDoc.hasNext()) {
-                    System.out.println(cursorDoc.next());
-                }
-            }
-
-
-        }catch(UnknownHostException e) {
-            e.printStackTrace();
-        }
+        return personList;
     }
 }
