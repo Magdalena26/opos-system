@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DbConnector {
 
-    private static final String DATABASE_NAME = "crawlerDB";
+    private static final String DATABASE_NAME = "crawler-db";
     private static final String COLLECTION_NAME = "names";
 
     private static final MongoClient mongoClient = new MongoClient("localhost", 27017);
