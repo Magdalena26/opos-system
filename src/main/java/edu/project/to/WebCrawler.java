@@ -28,7 +28,7 @@ public class WebCrawler {
 
     private final String ROOT_URL;
     private final List<String> urls = new ArrayList<>();
-    private final List<Person> personsFound = new ArrayList<>();
+    private final List<Person> peopleFound = new ArrayList<>();
 
     private static int pagesCrawled = 0;
 
@@ -40,7 +40,7 @@ public class WebCrawler {
     public void start() {
         System.out.println("CRAWLING # " + pagesCrawled);
         crawlRootPage(ROOT_URL);
-        DbConnector.savePersonCollection(personsFound);
+        DbConnector.savePersonCollection(peopleFound);
     }
 
     private void crawlRootPage(String url) {
@@ -107,7 +107,6 @@ public class WebCrawler {
 
     private void addFoundPerson(String url, String name) {
         urls.add(url);
-        personsFound.add(new Person(url, name));
+        peopleFound.add(new Person(url, name));
     }
-
 }
