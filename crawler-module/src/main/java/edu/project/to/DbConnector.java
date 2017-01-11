@@ -39,7 +39,7 @@ public class DbConnector {
         personList.forEach(DbConnector::savePerson);
     }
 
-    public static List<String> getPeopleByName(String name) {
+    public List<String> getPeopleByName(String name) {
 
         Document filter = new Document("name", name);
         MongoCursor<Document> cursor = collection.find(filter).iterator();
@@ -53,7 +53,7 @@ public class DbConnector {
         return personUrlList;
     }
 
-    public static List<String> getPeopleByUrl(String url){
+    public List<String> getPeopleByUrl(String url){
         Document filter = new Document("url", url);
         MongoCursor<Document> cursor = collection.find(filter).iterator();
 

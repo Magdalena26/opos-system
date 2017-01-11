@@ -30,7 +30,7 @@ import java.io.IOException;
 
 public class Graph {
 
-    public static void main(String[] args) {
+    public Graph() {
         //Init a project
         ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
         pc.newProject();
@@ -47,7 +47,7 @@ public class Graph {
         //Import file
         Container container;
         try {
-            File file = new File("src/main/resources/data.gexf");
+            File file = new File("src/main/resources/graphData.gexf");
             container = importController.importFile(file);
             container.getLoader().setEdgeDefault(EdgeDirectionDefault.UNDIRECTED);   //Force DIRECTED
         } catch (Exception ex) {
@@ -96,10 +96,10 @@ public class Graph {
         //Rank size by centrality
         Column centralityColumn = graphModel.getNodeTable().getColumn(GraphDistance.BETWEENNESS);
         Function centralityRanking = appearanceModel.getNodeFunction(graph, centralityColumn, RankingNodeSizeTransformer.class);
-        RankingNodeSizeTransformer centralityTransformer = (RankingNodeSizeTransformer) centralityRanking.getTransformer();
-        centralityTransformer.setMinSize(3);
-        centralityTransformer.setMaxSize(10);
-        appearanceController.transform(centralityRanking);
+        //RankingNodeSizeTransformer centralityTransformer = (RankingNodeSizeTransformer) centralityRanking.getTransformer();
+        //centralityTransformer.setMinSize(3);
+        //centralityTransformer.setMaxSize(10);
+        //appearanceController.transform(centralityRanking);
 
         //Preview
         model.getProperties().putValue(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE);
