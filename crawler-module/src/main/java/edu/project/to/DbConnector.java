@@ -1,13 +1,15 @@
 package edu.project.to;
 
-import com.mongodb.*;
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -60,6 +62,17 @@ public class DbConnector {
         List<String> personNameList = new ArrayList<>();
         cursor.forEachRemaining(document ->
                 personNameList.add(document.getString("name"))
+        );
+        return personNameList;
+    }
+
+    public Set<String> getPeopleNameFromDatabase(){
+        Document filter = new Document();
+        MongoCursor<Document> cursor = collection.find(filter).iterator();
+
+        Set<String> personNameList = new HashSet<>();
+        cursor.forEachRemaining(document ->
+            personNameList.add(document.getString("name"))
         );
         return personNameList;
     }
