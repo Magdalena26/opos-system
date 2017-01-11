@@ -39,9 +39,14 @@ public class MyUI extends UI {
     }
 
     public boolean crawlUrl(String url){
-        //Main mainCrawler = new Main();
-        //mainCrawler.crawlUrl(url);
+        Main mainCrawler = new Main();
+        mainCrawler.crawlUrl(url);
 
         return true;
+    }
+
+    public void createGraph(String name) {
+        GEXFFileCreator gexfFileCreator = new GEXFFileCreator(name);
+        Graph graph = new Graph();
     }
 }

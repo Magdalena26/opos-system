@@ -35,6 +35,7 @@ public class GraphView extends CustomComponent implements View {
 
         Button returnButton = new Button("Return");
         returnButton.addClickListener(e -> {
+
                     UI.getCurrent().getNavigator().navigateTo(MainView.NAME);
                 }
         );

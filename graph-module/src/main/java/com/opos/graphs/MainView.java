@@ -26,7 +26,7 @@ public class MainView extends CustomComponent implements View{
         button1.addClickListener( e -> {
             if(urlField.getValue()!= null && urlField.getValue().trim().length()>0)
             if(((MyUI) UI.getCurrent()).crawlUrl(urlField.getValue())){
-                //TODO popup
+                urlField.setValue("");
             } else {
                 //TODO popup
             }
@@ -39,9 +39,13 @@ public class MainView extends CustomComponent implements View{
 
         ComboBox nameField = new ComboBox();
         nameField.setWidth("500px");
+        nameField.addItem("Tim");
+        nameField.addItem("Alice");
+        nameField.addItem("Paul");
 
         Button button2 = new Button("Show");
         button2.addClickListener( e -> {
+            ((MyUI) UI.getCurrent()).createGraph(nameField.getValue().toString());
             UI.getCurrent().getNavigator().navigateTo(GraphView.NAME);
         });
 

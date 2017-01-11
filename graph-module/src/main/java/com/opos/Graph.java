@@ -111,7 +111,7 @@ public class Graph {
         //Export
         ExportController ec = Lookup.getDefault().lookup(ExportController.class);
         try {
-            ec.exportFile(new File("src/main/resources/graph.png"));
+            ec.exportFile(new File("src/main/webapp/VAADIN/themes/mytheme/img/graph.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
             return;
