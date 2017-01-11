@@ -14,8 +14,6 @@ public class Main {
     public static final String APPLICATION_URL = "https://github.com/";
     public static final String APPLICATION_UA = Main.APPLICATION_NAME + "/" + Main.APPLICATION_VERSION + " (" + Main.APPLICATION_URL + ")";
 
-    //  public static void main(String[] args) {
-
     public static int crawlUrl(String urlAddress) {
         init();
         sayHello();
@@ -30,13 +28,17 @@ public class Main {
 
     }
 
-
+/*
     public static void main(String args[]){
-        int i = crawlUrl("http://www.thetimes.co.uk/");
-    }
+        int i = crawlUrl("http://www.breakingnewsenglish.com/1701/170110-zombies.html");
+        DbConnector dbConnector = new DbConnector();
+        List<String> urls = dbConnector.getPeopleByName("Roy");
+        urls.forEach(x -> System.out.println(x));
 
-// specyfikacja wymagan
-//
+        List<String> names = dbConnector.getPeopleByUrl("http://www.breakingnewsenglish.com/1701/170110-zombies.html");
+        names.forEach(x -> System.out.println(x));
+    }
+*/
 
     private static void init() {
 

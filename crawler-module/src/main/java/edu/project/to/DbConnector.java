@@ -39,16 +39,28 @@ public class DbConnector {
         personList.forEach(DbConnector::savePerson);
     }
 
-    public static List<Person> getPeopleByName(String name) {
+    public static List<String> getPeopleByName(String name) {
 
         Document filter = new Document("name", name);
         MongoCursor<Document> cursor = collection.find(filter).iterator();
 
         List<Person> personList = new ArrayList<>();
+        List<String> personUrlList = new ArrayList<>();
         cursor.forEachRemaining(document ->
-                personList.add(new Person(document.getString("name"), document.getString("url")))
+                personUrlList.add(document.getString("url"))
         );
 
-        return personList;
+        return personUrlList;
+    }
+
+    public static List<String> getPeopleByUrl(String url){
+        Document filter = new Document("url", url);
+        MongoCursor<Document> cursor = collection.find(filter).iterator();
+
+        List<String> personNameList = new ArrayList<>();
+        cursor.forEachRemaining(document ->
+                personNameList.add(document.getString("name"))
+        );
+        return personNameList;
     }
 }

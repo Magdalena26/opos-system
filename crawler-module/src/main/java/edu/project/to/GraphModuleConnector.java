@@ -7,7 +7,7 @@ public class GraphModuleConnector implements GraphConnectorInterface {
 
     @Override
     public File getGraphFile(String name) {
-        List<Person> personList = DbConnector.getPeopleByName(name);
+        List<String> personList = DbConnector.getPeopleByName(name);
 
         //TODO
 
@@ -17,7 +17,7 @@ public class GraphModuleConnector implements GraphConnectorInterface {
     }
 
     //TODO refactor this
-    private Object createGexfFile(List<Person> personList) {
+    private Object createGexfFile(List<String> personList) {
         return new Object();
     }
 

@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class WebCrawler {
 
-    private final String CLASSIFIER_PATH = "/home/magda/Desktop/opos-system/classifiers/english.all.3class.distsim.crf.ser.gz";
+    private final String CLASSIFIER_PATH = "../classifiers/english.all.3class.distsim.crf.ser.gz";
     private final AbstractSequenceClassifier<CoreLabel> classifier =
             CRFClassifier.getClassifierNoExceptions(CLASSIFIER_PATH);
 
