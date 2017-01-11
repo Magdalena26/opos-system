@@ -1,6 +1,7 @@
 package com.opos.graphs;
 
 
+import com.opos.MyUI;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
@@ -9,30 +10,48 @@ import com.vaadin.ui.*;
  * Created by damia_000 on 2016-11-29.
  */
 public class MainView extends CustomComponent implements View{
-    public static final String NAME = "";
+    public static final String NAME = "MainView";
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         final VerticalLayout layout = new VerticalLayout();
 
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
+        CssLayout groupLayout1 = new CssLayout();
+        groupLayout1.setCaption("Find names in the article:");
 
-        Button button = new Button("Click Me");
-        button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue()
-                    + ", it works!"));
+        TextField urlField = new TextField();
+        urlField.setWidth("500px");
+
+        Button button1 = new Button("Parse");
+        button1.addClickListener( e -> {
+            if(urlField.getValue()!= null && urlField.getValue().trim().length()>0)
+            if(((MyUI) UI.getCurrent()).crawlUrl(urlField.getValue())){
+                //TODO popup
+            } else {
+                //TODO popup
+            }
         });
 
-        layout.addComponents(name, button);
+        groupLayout1.addComponents(urlField,button1);
+
+        CssLayout groupLayout2 = new CssLayout();
+        groupLayout2.setCaption("Show graph for name:");
+
+        ComboBox nameField = new ComboBox();
+        nameField.setWidth("500px");
+
+        Button button2 = new Button("Show");
+        button2.addClickListener( e -> {
+            UI.getCurrent().getNavigator().navigateTo(GraphView.NAME);
+        });
+
+        groupLayout2.addComponents(nameField,button2);
+
+        layout.addComponents(groupLayout1,groupLayout2);
         layout.setMargin(true);
         layout.setSpacing(true);
 
 
-
-        Button graph = new Button("Show graph");
-        graph.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(GraphView.NAME));
-        layout.addComponent(graph);
         setCompositionRoot(layout);
 
     }

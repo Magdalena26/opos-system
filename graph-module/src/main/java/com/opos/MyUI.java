@@ -30,8 +30,7 @@ public class MyUI extends UI {
         nav.addView(MainView.NAME,mainView);
         nav.addView(GraphView.NAME,graphView);
         nav.navigateTo(MainView.NAME);
-        Main mainCrawler = new Main();
-        mainCrawler.crawlUrl("http://www.bbc.co.uk/learningenglish/");
+
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
@@ -39,5 +38,10 @@ public class MyUI extends UI {
     public static class MyUIServlet extends VaadinServlet {
     }
 
+    public boolean crawlUrl(String url){
+        //Main mainCrawler = new Main();
+        //mainCrawler.crawlUrl(url);
 
+        return true;
+    }
 }

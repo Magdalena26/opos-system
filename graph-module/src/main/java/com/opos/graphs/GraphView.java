@@ -4,9 +4,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import java.io.File;
 
@@ -24,7 +22,24 @@ public class GraphView extends CustomComponent implements View {
         ThemeResource resource = new ThemeResource("img/graph.png");
         Image image = new Image("graaaph", resource);
 
-        mainLayout.addComponent(image);
+        CssLayout groupLayout = new CssLayout();
+
+        ComboBox optionField = new ComboBox();
+
+        Button button = new Button("Show");
+        button.addClickListener( e -> {
+            UI.getCurrent().getNavigator().navigateTo(GraphView.NAME);
+        });
+
+        groupLayout.addComponents(optionField,button);
+
+        Button returnButton = new Button("Return");
+        returnButton.addClickListener(e -> {
+                    UI.getCurrent().getNavigator().navigateTo(MainView.NAME);
+                }
+        );
+
+        mainLayout.addComponents(image,groupLayout,returnButton);
         setCompositionRoot(mainLayout);
     }
 }
