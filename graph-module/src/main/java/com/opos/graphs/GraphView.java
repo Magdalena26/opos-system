@@ -20,7 +20,7 @@ public class GraphView extends CustomComponent implements View {
         VerticalLayout mainLayout = new VerticalLayout();
 
         ThemeResource resource = new ThemeResource("img/graph.png");
-        Image image = new Image("graaaph", resource);
+        Image image = new Image("",resource);
 
         CssLayout groupLayout = new CssLayout();
 

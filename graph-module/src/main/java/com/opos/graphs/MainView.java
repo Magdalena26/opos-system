@@ -2,6 +2,7 @@ package com.opos.graphs;
 
 
 import com.opos.MyUI;
+import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
@@ -38,20 +39,33 @@ public class MainView extends CustomComponent implements View{
         groupLayout2.setCaption("Show graph for name:");
 
         ComboBox nameField = new ComboBox();
-        nameField.setWidth("500px");
+        nameField.setWidth("400px");
         nameField.addItem("Tim");
         nameField.addItem("Alice");
         nameField.addItem("Paul");
 
+        TextField numField = new TextField();
+        numField.setWidth("100px");
+
+
         Button button2 = new Button("Show");
         button2.addClickListener( e -> {
-            ((MyUI) UI.getCurrent()).createGraph(nameField.getValue().toString());
-            UI.getCurrent().getNavigator().navigateTo(GraphView.NAME);
+            if(nameField.getValue()!=null && numField.getValue()!=null && numField.getValue().trim().length()>0) {
+                try{
+                    int num = Integer.parseInt(numField.getValue().trim());
+                //((MyUI) UI.getCurrent()).createGraph(nameField.getValue().toString());
+                UI.getCurrent().getNavigator().navigateTo(GraphView.NAME);
+                } catch (Exception exception){
+
+                }
+            }
         });
 
-        groupLayout2.addComponents(nameField,button2);
+        groupLayout2.addComponents(nameField,numField,button2);
 
         layout.addComponents(groupLayout1,groupLayout2);
+        layout.setComponentAlignment(groupLayout1,Alignment.MIDDLE_CENTER);
+        layout.setComponentAlignment(groupLayout2,Alignment.MIDDLE_CENTER);
         layout.setMargin(true);
         layout.setSpacing(true);
 
