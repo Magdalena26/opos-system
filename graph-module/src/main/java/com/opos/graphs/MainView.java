@@ -49,6 +49,7 @@ public class MainView extends CustomComponent implements View{
         for(String name :((MyUI) UI.getCurrent()).getNameSet()){
             nameField.addItem(name);
         }
+        nameField.setWidth("400px");
 
         TextField numField = new TextField();
         numField.setWidth("100px");
