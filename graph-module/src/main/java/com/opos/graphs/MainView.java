@@ -5,6 +5,7 @@ import com.opos.MyUI;
 import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 
 /**
@@ -17,6 +18,11 @@ public class MainView extends CustomComponent implements View{
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         final VerticalLayout layout = new VerticalLayout();
 
+        ThemeResource resource = new ThemeResource("img/logo.png");
+        Image image = new Image("",resource);
+        layout.addComponent(image);
+        layout.setComponentAlignment(image,Alignment.MIDDLE_CENTER);
+
         CssLayout groupLayout1 = new CssLayout();
         groupLayout1.setCaption("Find names in the article:");
 
@@ -28,8 +34,9 @@ public class MainView extends CustomComponent implements View{
             if(urlField.getValue()!= null && urlField.getValue().trim().length()>0)
             if(((MyUI) UI.getCurrent()).crawlUrl(urlField.getValue())){
                 urlField.setValue("");
+                showPopUpParse(0);
             } else {
-                //TODO popup
+                showPopUpParse(-1);
             }
         });
 
@@ -39,10 +46,9 @@ public class MainView extends CustomComponent implements View{
         groupLayout2.setCaption("Show graph for name:");
 
         ComboBox nameField = new ComboBox();
-        nameField.setWidth("400px");
-        nameField.addItem("Tim");
-        nameField.addItem("Alice");
-        nameField.addItem("Paul");
+        for(String name :((MyUI) UI.getCurrent()).getNameSet()){
+            nameField.addItem(name);
+        }
 
         TextField numField = new TextField();
         numField.setWidth("100px");
@@ -56,9 +62,9 @@ public class MainView extends CustomComponent implements View{
                 ((MyUI) UI.getCurrent()).createGraph(nameField.getValue().toString(), num);
                 UI.getCurrent().getNavigator().navigateTo(GraphView.NAME);
                 } catch (Exception exception){
-
-                }
-            }
+                    UI.getCurrent().addWindow(createPopUpError());                }
+            } else {
+                    UI.getCurrent().addWindow(createPopUpError());            }
         });
 
         groupLayout2.addComponents(nameField,numField,button2);
@@ -72,5 +78,55 @@ public class MainView extends CustomComponent implements View{
 
         setCompositionRoot(layout);
 
+    }
+
+    private Window createPopUpError(){
+
+        Window w = new Window();
+        w.center();
+        w.setModal(true);
+        w.setResizable(false);
+
+
+        VerticalLayout errorLayout = new VerticalLayout();
+        errorLayout.setWidth("200px");
+        errorLayout.setHeight("50px");
+        errorLayout.setMargin(true);
+
+
+        Label l = new Label("Podano bledne dane");
+
+        errorLayout.addComponent(l);
+        w.setContent(errorLayout);
+        w.setCaption("Blad");
+        return w;
+    }
+
+    public void showPopUpParse(int i){
+
+        Window w = new Window();
+        w.center();
+        w.setModal(true);
+        w.setResizable(false);
+
+
+        VerticalLayout errorLayout = new VerticalLayout();
+        errorLayout.setWidth("200px");
+        errorLayout.setHeight("50px");
+        errorLayout.setMargin(true);
+
+        Label l;
+
+        if(i == -1) {
+            w.setCaption("Blad");
+            l = new Label("Wystapil blad podczas parsingu");
+        } else {
+            w.setCaption("Sukces");
+            l = new Label("Parsing zakonczony sukcesem");
+        }
+        errorLayout.addComponent(l);
+        w.setContent(errorLayout);
+
+        UI.getCurrent().addWindow(w);
     }
 }

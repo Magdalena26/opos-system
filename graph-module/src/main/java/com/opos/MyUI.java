@@ -8,9 +8,11 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
+import edu.project.to.DbConnector;
 import edu.project.to.Main;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.Set;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -40,9 +42,15 @@ public class MyUI extends UI {
 
     public boolean crawlUrl(String url){
         Main mainCrawler = new Main();
-        mainCrawler.crawlUrl(url);
+        if(mainCrawler.crawlUrl(url)==0)
+            return true;
 
-        return true;
+        return false;
+    }
+
+    public Set<String> getNameSet(){
+        DbConnector dbConnector = new DbConnector();
+        return dbConnector.getPeopleNameFromDatabase();
     }
 
     public void createGraph(String name, int num) {

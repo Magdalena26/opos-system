@@ -40,7 +40,7 @@ public class GraphView extends CustomComponent implements View {
                 }
         );
 
-        mainLayout.addComponents(image,groupLayout,returnButton);
+        mainLayout.addComponents(image,returnButton);
         setCompositionRoot(mainLayout);
     }
 }
