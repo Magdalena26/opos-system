@@ -53,7 +53,7 @@ public class MainView extends CustomComponent implements View{
             if(nameField.getValue()!=null && numField.getValue()!=null && numField.getValue().trim().length()>0) {
                 try{
                     int num = Integer.parseInt(numField.getValue().trim());
-                //((MyUI) UI.getCurrent()).createGraph(nameField.getValue().toString());
+                ((MyUI) UI.getCurrent()).createGraph(nameField.getValue().toString(), num);
                 UI.getCurrent().getNavigator().navigateTo(GraphView.NAME);
                 } catch (Exception exception){
 

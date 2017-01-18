@@ -28,7 +28,7 @@ public class GEXFFileCreatorTest {
     @Test
     public void checkIfFileCreated() {
         //given
-        GEXFFileCreator gexfFileCreator = new GEXFFileCreator("Paul");
+        GEXFFileCreator gexfFileCreator = new GEXFFileCreator("Alice", 50);
         //when
         File file = new File("src/main/resources/graphData.gexf");
         //then

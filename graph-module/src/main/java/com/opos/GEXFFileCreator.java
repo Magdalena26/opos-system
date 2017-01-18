@@ -15,10 +15,12 @@ import java.util.Map;
 public class GEXFFileCreator {
 
     private String name;
+    private int num;
 
     // the argument list is only applied for test purposes
-    public GEXFFileCreator(String name) {
+    public GEXFFileCreator(String name, int num) {
         this.name = name;
+        this.num = num;
         saveFile(name);
     }
 
@@ -56,22 +58,30 @@ public class GEXFFileCreator {
 
     // function to create the nodes and edges part of the file
     private void parseData(PrintWriter writer, List<String> names) {
-        HashMap<String, String> namesMap = new HashMap<>();
+        HashMap<String, Integer> namesMap = new HashMap<>();
         for (String name : names) {
-            namesMap.put(name, name);
+            if(namesMap.containsKey(name)) {
+                int weight = namesMap.get(name);
+                namesMap.put(name, weight + 1);
+            }
+            else {
+                namesMap.put(name, 1);
+            }
         }
 
         writer.println("<nodes count=\"" + (namesMap.size() + 1) + "\">");
         writer.println("<node id=\"0\" label=\"" + name + "\"/>");
-        int i = 0;
-        for(Map.Entry<String, String> name : namesMap.entrySet()) {
-            writer.println("<node id=\"" + (i + 1) + "\" label=\"" + name.getValue() +"\"/>");
-            i++;
+        int count = 0;
+        for(Map.Entry<String, Integer> name : namesMap.entrySet()) {
+            if(name.getValue() > num) {
+                writer.println("<node id=\"" + (count + 1) + "\" label=\"" + name.getKey() + "\" weight=\"" + name.getValue() + "\"/>");
+                count++;
+            }
         }
         writer.println("</nodes>");
 
         writer.println("<edges count=\"" + namesMap.size() + "\">");
-        for (i = 0; i < namesMap.size() - 1; i++) {
+        for (int i = 0; i < count; i++) {
             writer.println("<edge id=\"" + i + "\" source=\"0\" target=\"" + (i + 1) + "\"/>");
         }
         writer.println("</edges>");

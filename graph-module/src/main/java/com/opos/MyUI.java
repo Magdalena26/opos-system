@@ -45,8 +45,8 @@ public class MyUI extends UI {
         return true;
     }
 
-    public void createGraph(String name) {
-        GEXFFileCreator gexfFileCreator = new GEXFFileCreator(name);
+    public void createGraph(String name, int num) {
+        GEXFFileCreator gexfFileCreator = new GEXFFileCreator(name, num);
         Graph graph = new Graph();
     }
 }
